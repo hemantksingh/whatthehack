@@ -1,0 +1,16 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+    name: content-init
+    namespace: hack
+spec:
+  template:
+    spec:
+      containers:
+      - name: content-init
+        image: whatthehackmsft/content-init
+        env:
+          - name: MONGODB_CONNECTION
+            value: mongodb://content-db:27017/contentdb
+      restartPolicy: Never
+  backoffLimit: 4

@@ -1,0 +1,45 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: content-db
+  namespace: hack
+  labels:
+    app: content-db
+spec:
+  type: ClusterIP
+  ports:
+  - protocol: TCP
+    port: 27017
+    targetPort: 27017
+  selector:
+    app: content-db
+
+---
+apiVersion: v1
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: content-db
+  namespace: hack
+  labels:
+    app: content-db
+spec:
+  replicas: 1  
+  selector:
+    matchLabels:
+      app: content-db
+  template:
+    metadata:
+      labels:
+        app: content-db
+    spec:
+      containers:
+      - name: content-db
+        image: docker.io/mongo
+        resources:
+          requests:
+            memory: 128Mi
+            cpu: 500m
+          limits:
+            memory: 256Mi
+            cpu: 1
