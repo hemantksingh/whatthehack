@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lanfacts
+  namespace: {{ .Values.namespace }}
+  labels:
+    k8s-app: langfacts
+spec:
+{{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+{{- end }}
+  selector:
+    matchLabels:
+      k8s-app: langfacts
+  template:
+    metadata:
+      labels:
+        k8s-app: langfacts
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: HACK_YEAR
+              value: "2018"
+            - name: HACK_MONITORING_ENABLED
+              value: "false"
+            - name: HACK_SECURITY_ENABLED
+              value: "false"
+          ports:
+          - name: ui
+            containerPort: 80
+            protocol: TCP
+           
