@@ -38,8 +38,29 @@ spec:
         image: docker.io/mongo
         resources:
           requests:
-            memory: 128Mi
-            cpu: 500m
+            memory: 55M
+            cpu: 20m
           limits:
             memory: 256Mi
             cpu: 1
+        ports:
+        - containerPort:  27017
+          name:  mongo-db
+        volumeMounts:
+        - mountPath: /data/db
+          name: azuredisk-db
+        - mountPath: /data/configdb
+          name: azuredisk-configdb
+        imagePullPolicy: Always
+      volumes:
+        - name: azuredisk-db
+          azureDisk:
+            kind: Managed
+            diskName: mongodb-datadisk
+            diskURI: "/subscriptions/49eb4050-650a-40f4-9bc7-0b30ee4c01f9/resourceGroups/mc-playground-lolcat-aks/providers/Microsoft.Compute/disks/mongodb-datadisk"
+        - name: azuredisk-configdb
+          azureDisk:
+            kind: Managed
+            diskName: mongodb-configdisk
+            diskURI: "/subscriptions/49eb4050-650a-40f4-9bc7-0b30ee4c01f9/resourceGroups/mc-playground-lolcat-aks/providers/Microsoft.Compute/disks/mongodb-configdisk"
+      restartPolicy: Always

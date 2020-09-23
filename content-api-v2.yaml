@@ -38,8 +38,8 @@ spec:
         image: whatthehackmsft/content-api:v2
         resources:
           requests:
-            memory: 128Mi
-            cpu: 500m
+            memory: 55M
+            cpu: 20m
           limits:
             memory: 256Mi
             cpu: 1
