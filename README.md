@@ -22,15 +22,15 @@ kubectl -n hack set image deployment/content-api content-api=whatthehackmsft/con
 ## Helm chart
 
 ```sh
-# create the namespace outside helm
+# create the namespace outside helm using kubectl
 kubectl create namespace thehack
 
 # create helm chart
 helm create langfacts
 
-# install dry run
+# install dry run 
 helm install langfacts --dry-run --debug ./langfacts 
 
-# upgrade app
+# upgrade app using local chart repository './' and chart 'langfacts'
 helm upgrade --install langfacts --debug ./langfacts --set image.tag=v4
 ```
