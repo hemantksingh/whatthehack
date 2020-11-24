@@ -33,4 +33,14 @@ helm install langfacts --dry-run --debug ./langfacts
 
 # upgrade app using local chart repository './' and chart 'langfacts'
 helm upgrade --install langfacts --debug ./langfacts --set image.tag=v4
+
+# get installed releases
+helm list
+
+# get installed repos
+helm repo list
+
+# get charts in a reps
+helm search repo <repo-name>
+
 ```
